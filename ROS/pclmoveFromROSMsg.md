@@ -1,0 +1,3 @@
+# pclmoveFromROSMsg
+
+从sensor_msgsPointCloud2到pclPointCloud转换使用pclmoveFromROSMsg，比原来pclfromROSMsg快一倍的左右

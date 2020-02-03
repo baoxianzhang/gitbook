@@ -1,0 +1,26 @@
+# CMakeList增加16.04和14.04版本的检测
+
+```cmake
+execute_process(COMMAND lsb_release -rs 
+  OUTPUT_VARIABLE RELEASE_VERSIONNAME
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+MESSAGE("THE RELEASE_VERSIONNAME  " ${RELEASE_VERSIONNAME})
+
+
+  if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+    if("${RELEASE_VERSIONNAME}" STREQUAL "16.04")
+      set(LIB_NAME "${LIB_PREFIX}_x86_64_1604")
+    elseif("${RELEASE_VERSIONNAME}" STREQUAL "14.04")
+      set(LIB_NAME "${LIB_PREFIX}_x86_64_1404")
+    endif()
+  elseif (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "aarch64")
+    if("${RELEASE_VERSIONNAME}" STREQUAL "16.04")
+      set(LIB_NAME "${LIB_PREFIX}_tx2")
+    elseif("${RELEASE_VERSIONNAME}" STREQUAL "14.04")
+      set(LIB_NAME "${LIB_PREFIX}_tx2_1404")
+    endif()
+  endif()
+
+```
+

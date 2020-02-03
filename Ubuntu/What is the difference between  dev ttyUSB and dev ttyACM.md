@@ -1,0 +1,31 @@
+# What is the difference between  dev ttyUSB and dev ttyACM
+
+http://blog.csdn.net/bailyzheng/article/details/24598061
+
+Have you ever wondered why some USB devices used/dev/ttyUSB0 (or 1, or *n*) and others/dev/ttyACM0 (or 1, or *n*) when they are plugged into the host computer, while they seem to be acting as [UART](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver/transmitter) devices ([RS-232](https://en.wikipedia.org/wiki/RS-232)-like) over USB in both cases? Have you wondered why example USB firmwares for microcontrollers always end up with names such as/dev/ttyACM0 and never as /dev/ttyUSB0?
+
+*Warning: this is a Linux specific post, although it also contains genuine pieces of USB culture.*
+
+**What does** **ttyACM** **mean?**
+
+The [USB implementors forum](http://www.usb.org/) organization has described how devices conforming to the [Communications Device Class (CDC)](https://en.wikipedia.org/wiki/USB_communications_device_class) should present themselves to the USB host. The USB implementors forum also specified how CDC subclasses should act, including for those devices intended to talk with each other over the [public switched telephone network (PSTN)](https://en.wikipedia.org/wiki/Public_switched_telephone_network). Those are known as [modems](https://en.wikipedia.org/wiki/Modem) because the data goes through a modulation operation on the sending side, which transforms the bits into analog signals that can be carried over phone wires, and then through a demodulation operation on the receiving side to convert the analog signal back into the original bits.
+
+To discuss with the modem, the host USB driver must use one of the existing control models. For example, the*direct line control model* controls how data is exchanged between the host and the modem through an audio class interface, with the host taking charge of the modulation, demodulation, data compression (such as V.42bis) and error correction (such as V.42). This model is used by some [USB soft modems](https://en.wikipedia.org/wiki/Softmodem), which are very cheap because they mostly contain a [DSP](https://en.wikipedia.org/wiki/Digital_Signal_Processing) chip and some amplification and line adaptation layers.
+
+Another control model, aptly named **abstract control model** or ACM, lets the modem hardware perform the analog functions, and require that it supports the [ITU V.250](https://en.wikibooks.org/wiki/Serial_Programming/Modems_and_AT_Commands) (also known as Hayes in its former life) command set, either in the data stream or as a separate control stream through the communication class interface. When the commands are multiplexed with the data in the data stream, an [escape sequence](https://en.wikipedia.org/wiki/Time_Independent_Escape_Sequence) such as Hayes 302 (also known as “1 sec +++ 1 sec”) or TIES (that nobody remembers) must allow the host to put the modem into command mode.
+
+When developping on a USB-enabled embedded microcontroller that needs to exchange data with a computer over USB, it is tempting to use a standardized way of communication which is well supported by virtually every operating system. This is why most people choose to implement CDC/PSTN with ACM (did you notice that the Linux kernel driver for /dev/ttyACM0 is named cdc_acm?) because it is the simplest way to exchange raw data.
+
+But what about the mandatory V.250 command set? It is almost never implemented in such devices, but since the host has no reason to spontaneously generate V.250 commands by itself, the device will never have to answer them. Pretending the embedded device is a modem is the simplest way to communicate with it, even though it will probably never perform any modulation or demodulation task. Linux will not know that the device is lying, and will have it show up as /dev/ttyS0.
+
+**What does** **ttyUSB** **mean?**
+
+Sometimes, the embedded microcontroller does not come with a hardware USB interface. While it is possible to use a [software-only USB stack](http://www.obdev.at/products/vusb/index.html), the additional constraints put onto the CPU and the usually small storage size often lead board designers to include a dedicated UART to USB bridge. Several vendors, such as [FTDI](http://www.ftdichip.com/)or [Prolific](http://www.prolific.com.tw/US/) sell dedicated chips for a few euros.
+
+Those vendors opted not to lie to the host computer in having the chips announce themselves as USB modems when they were not. Each vendor defined its own (usually proprietary) protocols, with commands allowing to control functions of the chips such as setting the baud rate or controlling additional signals used to implement [hardware flow control](https://en.wikipedia.org/wiki/Flow_control_(data)#Hardware_flow_control).
+
+When it is practical to do so, Linux groups devices with similar functionalities under the same default device or interface names. For example, the UARTs present on your computer (if any) will be named /dev/ttyS0 and/dev/ttyS1 even if one of them is a legacy [16550](https://en.wikipedia.org/wiki/16550_UART) chip and the other one is a [MAX3100](http://www.maximintegrated.com/datasheet/index.mvp/id/1731) [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus)-controlled UART. Similarly, the devices offering UART-over-USB functionalities are named /dev/ttyUSB0,/dev/ttyUSB1, and so on, even though they are in fact using distinct device drivers.
+
+**Conclusion**
+
+So, when you see a /dev/ttyACM0 popping up, you can try to send it the escape sequence followed by AT commands, but there is a good chance that the device only pretends to be a modem and will happily send those characters to the core application without even considering intercepting them. If it is a /dev/ttyS0, do not try, unless the device behind the USB-UART bridge understands those command by itself (this is the case for the [XBee](http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/point-multipoint-rfmodules/xbee-series1-module) chip).
