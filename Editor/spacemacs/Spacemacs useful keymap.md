@@ -415,3 +415,33 @@ char 可以是小写的 a-z中的任一个 . 一个标记在除了下面的这�
 [[ 跳往上一个函式
 
 ]] 跳往下一个函式
+
+
+
+[https://github.com/LdBeth/Emacs-for-Noobs/blob/master/Sapcemacs%20FAQ.org](https://github.com/LdBeth/Emacs-for-Noobs/blob/master/Sapcemacs FAQ.org)
+
+## 下载插件过程中一直出错，怎么办？
+
+如果你在国内，可以使用 emasc-china 的镜像，[这里](https://elpa.emacs-china.org/) 有具体方法。请确保你所在的公 司／学校允许连接到镜像网站。同时你可能需要确保能够从 github 下载，因为有一部 分插件使用的是 github 而不是 elpa 源，必要时可以开代理。如果你没有办法用 https，请把 `dotspacemacs-elpa-https` 设置成 `nil` 。
+
+然后，多重启几次就可以了。
+
+## 状态栏的分界符有些奇怪
+
+设置 `dotspacemacs-default-font` 里面的 `:powerline-scale` 。
+
+## 个人配置该放到哪里？ `user-init` 还是 `user-config`
+
+除非你知道这配置怎么起作用，或者在 `user-config` 里不起作用，不然就加到 `user-init` 里面去。
+
+#### 为什么有的插件无法安装？
+
+可能是缺少 GnuTLS，按 `M-:` （Alt 键+Shift 键+;键），输入：
+
+```
+(gnutls-available-p)
+```
+
+回车。 如果返回值是 `nil` ，你需要安装额外的依赖包。
+
+解决方法同上一问。
