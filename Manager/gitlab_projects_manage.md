@@ -12,7 +12,7 @@
 
 + 以上都是记录开发的过程，而不是在issue上详细记录。相关的文档应该放在项目的gitlab仓库中，并保留原始可编辑的文档。
 
-+ 通过gitlab的TimeTracking(/spent, /estimate)， Due Date来管理每件项目的时间点
++ 通过gitlab的TimeTracking(/spend, /estimate)， Due Date来管理每件项目的时间点
 
 + 通过gitlab的milestone来管理需求项目的分类，制定开始和结束时间，规划一定时间段的事情。
 
