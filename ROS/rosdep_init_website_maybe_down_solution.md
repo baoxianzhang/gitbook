@@ -41,7 +41,7 @@ https://www.codenong.com/cs105702188/
 所以，只要将[ros/rosdistro](https://link.zhihu.com/?target=https%3A//github.com/ros/rosdistro.git)整个git下来，然后再将
 
 - `20-default.list`
-- `/usr/lib/python2.7/dist-packages/rosdep2/main.py`
+- `/usr/lib/python2.7/dist-packages/rosdep2/main.py`  （16.04版本没有）
 - `/usr/lib/python2.7/dist-packages/rosdep2/rep3.py`  （20.04版本没有）
 - `/usr/lib/python2.7/dist-packages/rosdistro/__init__.py`
 
@@ -53,6 +53,6 @@ https://www.codenong.com/cs105702188/
 2. 在本地`rosdistro`中搜索`20-default.list`，将其url指向本地repo；
 3. 搜索`rosdep2`和`rosdistro`中出现**[http://raw.githubusercontent.com](https://link.zhihu.com/?target=http%3A//raw.githubusercontent.com)**的位置，将其指向本地repo。
 
-
+使用下面的file语法：
 
 file:///home/leo/Projects/ros2_foxy/rosdistro
