@@ -1,6 +1,6 @@
 # 解决rosdep init报错“Website may be down”
 
-
+这个问题在终端翻墙也不成功。
 
 参考：
 
