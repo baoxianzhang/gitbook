@@ -40,10 +40,11 @@ https://www.codenong.com/cs105702188/
 
 所以，只要将[ros/rosdistro](https://link.zhihu.com/?target=https%3A//github.com/ros/rosdistro.git)整个git下来，然后再将
 
-- `20-default.list`
+- `20-default.list`(rosdistro/rosdep/sources.list/20-default.list 下载的目录下）SS
 - `/usr/lib/python2.7/dist-packages/rosdep2/main.py`  （16.04版本没有）
 - `/usr/lib/python2.7/dist-packages/rosdep2/rep3.py`  （20.04版本没有）
 - `/usr/lib/python2.7/dist-packages/rosdistro/__init__.py`
+- /usr/lib/python2.7/dist-packages/rosdep2/sources_list.py 
 
 中的**默认url全部指向本地的git**，即可解决这个问题。
 
