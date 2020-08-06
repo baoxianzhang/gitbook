@@ -60,3 +60,5 @@ git push origin --force --tags
 ## 7 BFG Repo-Cleaner
 https://rtyley.github.io/bfg-repo-cleaner/
 
+https://www.cnblogs.com/imzhizi/p/delete-files-thoroughly-using-bfg.html
+
