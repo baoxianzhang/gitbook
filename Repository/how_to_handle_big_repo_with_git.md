@@ -1,28 +1,20 @@
 # How to handle big repositories with Git
 
 主要参考：
-
 <https://www.atlassian.com/git/tutorials/big-repositories>
 
-
-
-## 方法一 --depth
-
+## 1 --depth
 ```sh
 git clone --depth [depth] [remote-url] 
 ```
 
-
-
-## 方法二 git gc
+## 2 git gc
 
 ```sh
 git gc # git gabage collection
 ```
 
-
-
-## 方法三 LFS
+## 3 LFS
 
 <https://zhuanlan.zhihu.com/p/146683392>
 
@@ -33,25 +25,19 @@ git lfs clone xxxxx
 
 ```
 
-
-
-## 方法四 --brancch
+## 4 --brancch
 
 ```sh
 git clone [remote url] --branch [branch_name] --single-branch [folder]
 ```
 
-
-
-## 方法五sparse-checkout
+## 5 sparse-checkout
 
 ```sh
 git sparse-checkout
 ```
 
-
-
-## 方法六 filter-branch
+## 6 filter-branch
 
 ```sh
 git filter-branch --tree-filter 'rm -rf [/path/to/spurious/asset/folder]'
@@ -71,5 +57,6 @@ git push origin --force --all
 git push origin --force --tags
 ```
 
-
+## 7 BFG Repo-Cleaner
+https://rtyley.github.io/bfg-repo-cleaner/
 
