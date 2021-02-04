@@ -22,3 +22,16 @@ This function was introduced in Qt 5.9.
 **升级指南：**    
 https://www.kutu66.com/ubuntu/article_170121
 + 把/opt/qt511/lib加到LD_LIBRARY_PATH里面
+
++ 解决中文输入的问题
+https://www.codenong.com/cs106739936/
+```
+把fcitx字库拷贝到对应的qt目录下：
+/usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so
+拷贝到
+/opt/qt511//plugins/platforminputcontexts/
+
+重新编译安装出现一下：
+-- Installing: /usr/local/share/flameshot/translations/Internationalization_zh_CN.qm
+
+```
