@@ -21,3 +21,4 @@ This function was introduced in Qt 5.9.
 
 **升级指南：**    
 https://www.kutu66.com/ubuntu/article_170121
++ 把/opt/qt511/lib加到LD_LIBRARY_PATH里面
