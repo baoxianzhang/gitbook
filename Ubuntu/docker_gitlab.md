@@ -5,6 +5,7 @@ https://www.cnblogs.com/javaGoGo/p/10296403.html
 
 https://docs.gitlab.com/ee/install/docker.html
 
+https://www.lixf.cc/2021/07/06/deploy-a-gitlab-server/
 
 ## 1 拉取gitlab的最新docker image
 ```sh
@@ -67,6 +68,8 @@ sudo docker container ls
 sudo docker ps -a
 sudo docker rm gitlab # rm，之后运行gitlab_docker， gitlab名称就不会提示冲突
 sudo docker info gitlab
+sudo docker logs -f gitlab
+sudo watch docker ps
 ```
 
 ## 5.2 gitlab-ctl 方式
@@ -74,18 +77,18 @@ sudo docker info gitlab
 
 配置完，经常要要用到下面命令。
 ```
-docker exec -it gitlab /bin/bash # 登入gitlab container
+sudo docker exec -it gitlab /bin/bash # 登入gitlab container
 ```
 
 在gitlab container里面
 ```
-gitlab-ctl reconfigure      # 重新应用gitlab配置
-gitlab-ctl restart          # 重启gitlab服务
-gitlab-ctl status           # 查看gitlab运行状态
-gitlab-ctl stop             # 停止gitlab服务
-gitlab-ctl tail             # 查看gitlab运行日志
-gitlab-ctl stop unicorn     # 停止相关数据连接服务
-gitlab-ctl stop sideki      # 停止相关数据连接服务
+sudo gitlab-ctl reconfigure      # 重新应用gitlab配置
+sudo gitlab-ctl restart          # 重启gitlab服务
+sudo gitlab-ctl status           # 查看gitlab运行状态
+sudo gitlab-ctl stop             # 停止gitlab服务
+sudo gitlab-ctl tail             # 查看gitlab运行日志
+sudo gitlab-ctl stop unicorn     # 停止相关数据连接服务
+sudo gitlab-ctl stop sideki      # 停止相关数据连接服务
 ```
 
 
