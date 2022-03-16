@@ -41,31 +41,27 @@ https://www.codenong.com/cs105702188/
 所以，只要将[ros/rosdistro](https://link.zhihu.com/?target=https%3A//github.com/ros/rosdistro.git)整个git下来，然后再将
 
 - `20-default.list`(rosdistro/rosdep/sources.list/20-default.list 下载的目录下）
-- `/usr/lib/python2.7/dist-packages/rosdep2/main.py`  （16.04版本没有）
-- `/usr/lib/python2.7/dist-packages/rosdep2/rep3.py`  （20.04版本没有）
-- `/usr/lib/python2.7/dist-packages/rosdistro/__init__.py`
-- /usr/lib/python2.7/dist-packages/rosdep2/sources_list.py 
+- `/usr/lib/python2.7/dist-packages/rosdep2/rep3.py`  (ubuntu16.04)
+- `/usr/lib/python2.7/dist-packages/rosdistro/__init__.py` (ubuntu16.04)
+- `/usr/lib/python2.7/dist-packages/rosdep2/sources_list.py`  (ubuntu16.04)
+- `/usr/lib/python3/dist-packages/rosdep2/rep3.py`  (ubuntu20.04)
+- `/usr/lib/python3/dist-packages/rosdistro/__init__.py` (ubuntu20.04)
+- `/usr/lib/python3/dist-packages/rosdep2/sources_list.py`  (ubuntu20.04)
 
 中的**默认url全部指向本地的git**，即可解决这个问题。
 
-**注意**: 以上的路径可能存在变化，最新的20.04下noetic版本的路径（使用`cd /usr/lib && ag "https://raw.githubusercontent.com/ros/rosdistro/master"`查找）
-- `20-default.list`(`rosdistro/rosdep/sources.list/20-default.list` 下载的目录下）
-- `/usr/lib/python2.7/dist-packages/rosdep2/rep3.py`
-- `/usr/lib/python2.7/dist-packages/rosdistro/__init__.py`
-- `/usr/lib/python3/dist-packages/rosdep2/sources_list.py`
+**注意**: 以上的路径可能存在变化，（可使用`cd /usr/lib && ag "https://raw.githubusercontent.com/ros/rosdistro/master"`查找）
+
 
 ## 3. 解决步骤
 
 1. `git clone https://github.com/ros/rosdistro.git`；
 2. 在本地`rosdistro`中搜索`20-default.list`，将其url指向本地repo；
-3. 搜索`rosdep2`和`rosdistro`中出现**http://raw.githubusercontent.com**的位置，将其指向本地repo。
-
-使用下面的file语法：
-
-file:///home/leo/code/rosdistro
-
-4. 把本地的`20-default.list`替换到`/etc/ros/rosdep/sources.list.d`
+即使用`file:///home/leo/code/rosdistro`替代`https://raw.githubusercontent.com/ros/rosdistro/master`
+3. 同理，在`/usr/lib`搜索`rosdep2`和`rosdistro`中出现`http://raw.githubusercontent.com`的位置，将其指向本地repo，文件参考上文。
+4. 把本地的`20-default.list`拷贝到`/etc/ros/rosdep/sources.list.d`，如果不存在这个目录就创建目录。
 5. 以上步骤相当于执行了`sudo rosdep init`, 现在只需要执行`rosdep update`
 
-## 4. 20.04的自动化脚本
-[rosdep_init_fail_replace_solution.sh](rosdep_init_fail_replace_solution.sh)
+## 4. 自动化脚本
+[rosdep_init_fail_replace_solution_ubuntu20.sh](rosdep_init_fail_replace_solution_ubuntu20.sh)      
+[rosdep_init_fail_replace_solution_ubuntu16.sh](rosdep_init_fail_replace_solution_ubuntu16.sh)      
